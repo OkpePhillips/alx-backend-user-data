@@ -15,8 +15,8 @@ def filter_datum(fields, redaction, message, separator):
     Function to return obfuscated log message
     """
     return re.sub(r'(?:(?<=' + separator + ')|^)(' + '|'.join(
-           fields) + ')=.*?(?=' + separator + '|$)', lambda x: x.group(1
-           ) + '=' + redaction, message)
+           fields) + ')=.*?(?=' + separator + '|$)', lambda x: x.group(
+               1) + '=' + redaction, message)
 
 
 class RedactingFormatter(logging.Formatter):
@@ -35,11 +35,13 @@ class RedactingFormatter(logging.Formatter):
         """
         method to filter values in incoming log records using filter_datum
         """
-        record.msg = filter_datum(self.fields, self.REDACTION, record.msg, self.SEPARATOR)
+        record.msg = filter_datum(self.fields, self.REDACTION,
+                                  record.msg, self.SEPARATOR)
         return super().format(record)
 
 
 PII_FIELDS = ('Name', 'DOB', 'Email', 'Phone', 'Address')
+
 
 def get_logger():
     """
@@ -56,6 +58,7 @@ def get_logger():
     logger.propagate = False
 
     return logger
+
 
 def get_db():
     """
@@ -75,12 +78,15 @@ def get_db():
 
     return connection
 
+
 def main():
+    """Entry point to the functions"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
 
     stream_handler = logging.StreamHandler()
-    formatter = RedactingFormatter(('name', 'email', 'phone', 'ssn', 'password'))
+    formatter = RedactingFormatter(('name', 'email', 'phone',
+                                    'ssn', 'password'))
     stream_handler.setFormatter(formatter)
 
     logger.addHandler(stream_handler)
@@ -93,8 +99,10 @@ def main():
     rows = cursor.fetchall()
 
     for row in rows:
-        logger.info(f"name={row[0]}; email={row[1]}; phone={row[2]}; ssn={row[3]};
-                    password={row[4]}; ip={row[5]}; last_login={row[6]}; user_agent={row[7]}")
+        logger.info(f"name={row[0]}; email={row[1]}; \
+                    phone={row[2]}; ssn={row[3]}; \
+                    password={row[4]}; ip={row[5]}; \
+                    last_login={row[6]}; user_agent={row[7]}")
 
     print("Filtered fields:\nname\nemail\nphone\nssn\npassword")
 

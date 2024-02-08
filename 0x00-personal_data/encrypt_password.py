@@ -1,5 +1,6 @@
 import bcrypt
 
+
 def hash_password(password):
     """
     function that returns a hashed password
@@ -9,6 +10,7 @@ def hash_password(password):
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
 
     return hashed_password
+
 
 def is_valid(hashed_password, password):
     """
