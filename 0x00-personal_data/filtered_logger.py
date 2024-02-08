@@ -3,14 +3,17 @@
 Module on personal data logging
 """
 
+
 import re
 import logging
 import csv
 import os
 import mysql.connector
+from typing import Tuple, List
 
 
-def filter_datum(fields, redaction, message, separator):
+def filter_datum(fields: List[str], redaction: str, message: str,
+                 separator: str) -> str:):
     """
     Function to return obfuscated log message
     """
@@ -27,7 +30,10 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, fields):
+    def __init__(self, fields: List[str]):
+        """
+        Initialize RedactingFormatter with a list of fields to be redacted.
+        """
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
@@ -40,10 +46,12 @@ class RedactingFormatter(logging.Formatter):
         return super().format(record)
 
 
-PII_FIELDS = ('Name', 'DOB', 'Email', 'Phone', 'Address')
+PII_FIELDS: Tuple[str, str, str, str, str] = ('Name', 'DOB',
+                                              'Email', 'Phone',
+                                              'Address')
 
 
-def get_logger():
+def get_logger() -> logging.Logger:
     """
     function that takes no arguments and returns a logging.Logger object
     """
@@ -60,7 +68,7 @@ def get_logger():
     return logger
 
 
-def get_db():
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """
     Function that returns a connector to the database.
     """
@@ -79,7 +87,7 @@ def get_db():
     return connection
 
 
-def main():
+def main() -> NoReturn:
     """Entry point to the functions"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
