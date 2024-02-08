@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+"""
+Encyrption module
+"""
+
 import bcrypt
 
 
