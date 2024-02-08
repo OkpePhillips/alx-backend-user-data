@@ -74,3 +74,30 @@ def get_db():
     )
 
     return connection
+
+def main():
+    logger = logging.getLogger("user_data")
+    logger.setLevel(logging.INFO)
+
+    stream_handler = logging.StreamHandler()
+    formatter = RedactingFormatter(('name', 'email', 'phone', 'ssn', 'password'))
+    stream_handler.setFormatter(formatter)
+
+    logger.addHandler(stream_handler)
+    logger.propagate = False
+
+    connection = get_db()
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM users")
+    rows = cursor.fetchall()
+
+    for row in rows:
+        logger.info(f"name={row[0]}; email={row[1]}; phone={row[2]}; ssn={row[3]};
+                    password={row[4]}; ip={row[5]}; last_login={row[6]}; user_agent={row[7]}")
+
+    print("Filtered fields:\nname\nemail\nphone\nssn\npassword")
+
+
+if __name__ == "__main__":
+    main()
