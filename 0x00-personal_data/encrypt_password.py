@@ -6,7 +6,7 @@ Encyrption module
 import bcrypt
 
 
-def hash_password(password):
+def hash_password(password: str) -> bytes:
     """
     function that returns a hashed password
     """
@@ -17,7 +17,7 @@ def hash_password(password):
     return hashed_password
 
 
-def is_valid(hashed_password, password):
+def is_valid(hashed_password: bytes, password: str) -> bool:
     """
     Check if the provided password matches the hashed password
     """
