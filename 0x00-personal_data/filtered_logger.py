@@ -87,7 +87,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     return connection
 
 
-def main() -> NoReturn:
+def main():
     """Entry point to the functions"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
