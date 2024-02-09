@@ -13,7 +13,7 @@ from typing import Tuple, List
 
 
 def filter_datum(fields: List[str], redaction: str, message: str,
-                 separator: str) -> str:):
+                 separator: str) -> str:
     """
     Function to return obfuscated log message
     """
