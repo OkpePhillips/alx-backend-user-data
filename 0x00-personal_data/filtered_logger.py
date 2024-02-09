@@ -9,10 +9,10 @@ import logging
 import csv
 import os
 import mysql.connector
-from typing import Tuple, List
+import typing
 
 
-def filter_datum(fields: List[str], redaction: str, message: str,
+def filter_datum(fields: typing.List[str], redaction: str, message: str,
                  separator: str) -> str:
     """
     Function to return obfuscated log message
@@ -30,7 +30,7 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, fields: List[str]):
+    def __init__(self, fields: typing.List[str]):
         """
         Initialize RedactingFormatter with a list of fields to be redacted.
         """
@@ -46,7 +46,7 @@ class RedactingFormatter(logging.Formatter):
         return super().format(record)
 
 
-PII_FIELDS: Tuple[str, str, str, str, str] = ('Name', 'DOB',
+PII_FIELDS: typing.Tuple[str, str, str, str, str] = ('Name', 'DOB',
                                               'Email', 'Phone',
                                               'Address')
 
