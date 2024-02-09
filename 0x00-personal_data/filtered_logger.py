@@ -47,8 +47,8 @@ class RedactingFormatter(logging.Formatter):
 
 
 PII_FIELDS: typing.Tuple[str, str, str, str, str] = ('Name', 'DOB',
-                                              'Email', 'Phone',
-                                              'Address')
+                                                     'Email', 'Phone',
+                                                     'Address')
 
 
 def get_logger() -> logging.Logger:
