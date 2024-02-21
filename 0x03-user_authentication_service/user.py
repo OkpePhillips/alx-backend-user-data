@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-User module
+User module for the definition of a user class
 """
-from sqlalchemy import Column, Integer, String, primary_key 
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
 
