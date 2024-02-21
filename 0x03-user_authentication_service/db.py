@@ -9,6 +9,7 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 from user import Base, User
+import bcrypt
 
 
 class DB:
@@ -52,3 +53,34 @@ class DB:
             return user
         except InvalidRequestError as e:
             raise e
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        Update a user in the database
+        """
+        user = self.find_user_by(id=user_id)
+
+        # Check if any invalid attribute is passed
+        invalid_attrs = set(kwargs.keys()) - set(User.__table__.columns.keys())
+        if invalid_attrs:
+            raise ValueError(f"Invalid attribute(s) provided: {', '.join(invalid_attrs)}")
+
+        # Update user attributes
+        for key, value in kwargs.items():
+            setattr(user, key, value)
+
+        # Commit changes to the database
+        try:
+            self._session.commit()
+        except InvalidRequestError as e:
+            self._session.rollback()
+            raise e
+
+    @staticmethod
+    def _hash_password(password: str) -> bytes:
+        """
+        Hashes a password string with salt using bcrypt
+        """
+        salt = bcrypt.gensalt()
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+        return hashed_password
