@@ -63,7 +63,8 @@ class DB:
         # Check if any invalid attribute is passed
         invalid_attrs = set(kwargs.keys()) - set(User.__table__.columns.keys())
         if invalid_attrs:
-            raise ValueError(f"Invalid attribute(s) provided: {', '.join(invalid_attrs)}")
+            raise ValueError(f"Invalid attribute(s) provided:
+                             {', '.join(invalid_attrs)}")
 
         # Update user attributes
         for key, value in kwargs.items():
