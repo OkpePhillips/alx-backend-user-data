@@ -71,7 +71,7 @@ class Auth:
         except ValueError:
             return None
 
-    def get_user_from_session_id(self, session_id: str):
+    def get_user_from_session_id(self, session_id: str) -> None:
         """
         Get the user corresponding to the given session ID.
         """
