@@ -2,7 +2,7 @@
 """
 User module
 """
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, primary_key 
 from sqlalchemy.ext.declarative import declarative_base
 
 
