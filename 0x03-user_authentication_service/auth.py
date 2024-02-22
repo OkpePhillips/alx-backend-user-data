@@ -10,6 +10,21 @@ from db import DB
 from user import User
 
 
+def _generate_uuid() -> str:
+        """
+        Generate a string representation of a new UUID.
+        """
+        return str(uuid.uuid4())
+
+def _hash_password(password: str) -> bytes:
+        """
+        Hashes a password string with salt using bcrypt
+        """
+        salt = bcrypt.gensalt()
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+        return hashed_password
+
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
@@ -29,18 +44,10 @@ class Auth:
         except NoResultFound:
             pass
 
-        hashed_password = self._hash_password(password)
+        hashed_password = _hash_password(password)
         user = self._db.add_user(email=email, hashed_password=hashed_password)
 
         return user
-
-    def _hash_password(password: str) -> bytes:
-        """
-        Hashes a password string with salt using bcrypt
-        """
-        salt = bcrypt.gensalt()
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
-        return hashed_password
 
     def valid_login(self, email: str, password: str) -> bool:
         """
@@ -53,11 +60,6 @@ class Auth:
         except ValueError:
             return False
 
-    def _generate_uuid() -> str:
-        """
-        Generate a string representation of a new UUID.
-        """
-        return str(uuid.uuid4())
 
     def create_session(self, email: str) -> str:
         """
@@ -65,7 +67,7 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(email=email)
-            session_id = self._generate_uuid()
+            session_id = _generate_uuid()
             self._db.update_user(user.id, session_id=session_id)
             return session_id
         except ValueError:
@@ -112,7 +114,7 @@ class Auth:
         """
         user = self._db.find_user_by(reset_token=reset_token)
         if user:
-            hashed_password = self._hash_password(new_password)
+            hashed_password = _hash_password(new_password)
             self._db.update_user(user.id, hashed_password=hashed_password,
                                  reset_token=None)
         else:
