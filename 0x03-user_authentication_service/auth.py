@@ -11,18 +11,19 @@ from user import User
 
 
 def _generate_uuid() -> str:
-        """
-        Generate a string representation of a new UUID.
-        """
-        return str(uuid.uuid4())
+    """
+    Generate a string representation of a new UUID.
+    """
+    return str(uuid.uuid4())
+
 
 def _hash_password(password: str) -> bytes:
-        """
-        Hashes a password string with salt using bcrypt
-        """
-        salt = bcrypt.gensalt()
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
-        return hashed_password
+    """
+    Hashes a password string with salt using bcrypt
+    """
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+    return hashed_password
 
 
 class Auth:
@@ -59,7 +60,6 @@ class Auth:
             return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
         except ValueError:
             return False
-
 
     def create_session(self, email: str) -> str:
         """
