@@ -3,8 +3,7 @@
 App module which serves as entry point to the application.
 """
 from auth import Auth
-from flask import Flask, jsonify, request, abort,
-make_response, redirect
+from flask import Flask, jsonify, request, abort, make_response, redirect
 
 
 app = Flask(__name__)
@@ -110,4 +109,4 @@ def update_password():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port="5000")
