@@ -100,12 +100,12 @@ class Auth:
         """
         Generate a reset password token for the user with the given email.
         """
-        user = self._db.find_user_by(email=email)
-        if user:
+        try:
+            user = self._db.find_user_by(email=email)
             reset_token = str(uuid.uuid4())
             self._db.update_user(user.id, reset_token=reset_token)
             return reset_token
-        else:
+        except NoResultFound:
             raise ValueError(f"User with email '{email}' does not exist.")
 
     def update_password(self, reset_token: str, new_password: str) -> None:
