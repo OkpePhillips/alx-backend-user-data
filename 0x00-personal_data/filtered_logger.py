@@ -56,7 +56,7 @@ def get_logger() -> logging.Logger:
     function that takes no arguments and returns a logging.Logger object
     """
     logger = logging.getLogger("user_data")
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.CRITICAL)
 
     stream_handler = logging.StreamHandler()
     formatter = RedactingFormatter(PII_FIELDS)
