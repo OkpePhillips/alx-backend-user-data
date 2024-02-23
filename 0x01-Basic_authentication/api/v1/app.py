@@ -27,6 +27,9 @@ if auth_type:
 
 @app.before_request
 def before_request():
+    """
+    Task to be done before any function call
+    """
     if auth is None:
         return
 
