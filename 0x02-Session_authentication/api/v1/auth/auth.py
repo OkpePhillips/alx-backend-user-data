@@ -31,6 +31,15 @@ class Auth:
             return None
         return request.headers['Authorization']
 
+    def session_cookie(self, request=None):
+        """
+        Method to return cookie from request
+        """
+        if request is None:
+            return None
+        session_name = os.environ.get('SESSION_NAME', '_my_session_id')
+        return request.cookies.get(session_name)
+
     def current_user(self, request=None) -> TypeVar('User'):
         """
         Method to return the current user if verified
